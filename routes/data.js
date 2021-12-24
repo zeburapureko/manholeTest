@@ -27,7 +27,7 @@ router.get('/update',(req, res, next)=> {
 });
 
 router.post('/post',(req, res, next)=> {
-    var data = {
+     data = {
       title: 'data/update',
       oya: req.body['oya'],
       k0: req.body['k0'],
