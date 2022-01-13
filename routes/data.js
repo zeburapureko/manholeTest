@@ -32,6 +32,7 @@ router.get('/update',(req, res, next)=> {
 
 router.post('/post',(req, res, next)=> {
     var id=req.body['id'];
+    data.oya=req.body['oya'];
     switch(id)
     {
         case "0":
