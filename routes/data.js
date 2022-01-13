@@ -48,7 +48,8 @@ router.post('/post',(req, res, next)=> {
     }
  
     req.session.data=data;
-    res.render('data/index', data);
+    //res.render('data/index', data);
+    res.render('data/response',data);
     console.log(req.body);
     
     //res.render('YOSHIHARA OK');
