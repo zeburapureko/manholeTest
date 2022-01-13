@@ -1,10 +1,12 @@
 var express = require('express');
 var router = express.Router();
-
- 
+var para ={
+    id:0
+}
  var data = {
       title: 'data/Index',
       oya: "0000000000000",
+      id:"0",
       k0: "00000",
       k0p1: "0",
       k0p2: "0",
@@ -24,22 +26,26 @@ router.get('/',(req, res, next)=> {
 });
 
 router.get('/update',(req, res, next)=> {
-    
-      data.title= 'data/update'
+     data.title= 'data/update'
     res.render('data/update', data);
 });
 
 router.post('/post',(req, res, next)=> {
-     data = {
-      title: 'data/update',
-      oya: req.body['oya'],
-      k0: req.body['k0'],
-      k0p1: req.body['k0p1'],
-      k0p2: req.body['k0p2'],
-      k1: req.body['k1'],
-      k1p1: req.body['k1p1'],
-      k1p2: req.body['k1p2'],      
-    };
+    var id=req.body['id'];
+    switch(id)
+    {
+        case "0":
+            data.k0=req.body['k0'];
+            data.k0p1= req.body['k0p1'];
+            data.k0p2= req.body['k0p2'];
+            break;
+        case "1":
+            data.k1=req.body['k0'];
+            data.k1p1= req.body['k0p1'];
+            data.k1p2= req.body['k0p2'];
+            break;            
+    }
+ 
     req.session.data=data;
     res.render('data/index', data);
     console.log(req.body);
