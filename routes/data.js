@@ -11,7 +11,7 @@ var dt = new Date();
 const max_num=10;
 const filename = '../mData.txt'; // データファイル名
 var message_data; // データ
-readFromFile(filename);
+//readFromFile(filename);
 var dt ;
 
 
