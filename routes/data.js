@@ -44,7 +44,7 @@ router.post('/post',(req, res, next)=> {
             
             let dt = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
             data.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
-        
+            data.k0=req.body['k0'];
             data.k0p1= req.body['k0p1'];
             data.k0p2= req.body['k0p2'];
             break;
