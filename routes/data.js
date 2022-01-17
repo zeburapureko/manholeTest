@@ -1,10 +1,15 @@
 var express = require('express');
 var router = express.Router();
+require('date-utils');
 var para ={
     id:0
 }
+var dt = new Date();
+
+
  var data = {
       title: 'data/Index',
+      dateStr:"",
       oya: "0000000000000",
       id:"0",
       k0: "00000",
@@ -36,7 +41,10 @@ router.post('/post',(req, res, next)=> {
     switch(id)
     {
         case "0":
-            data.k0=req.body['k0'];
+            
+            let dt = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
+            data.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
+        
             data.k0p1= req.body['k0p1'];
             data.k0p2= req.body['k0p2'];
             break;
