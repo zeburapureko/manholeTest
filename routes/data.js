@@ -1,5 +1,4 @@
 var fs=require('fs');
-//var qs =require('querystring');
 var express = require('express');
 require('date-utils');
 var para ={
@@ -9,7 +8,7 @@ var para ={
 var router = express.Router();
 
 var dt = new Date();
-const max_num=2;
+const max_num=100;
 const filename = '../mData.txt'; // データファイル名
 var message_data; // データ
 var dt ;
