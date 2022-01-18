@@ -24,7 +24,7 @@ message_data = "".split('\n');
       k0p2: "0",
       k1: "00000",
       k1p1: "0",
-      k1p2: "0",
+      k1p2: "0"
     };
 
 /* GET users listing. */
@@ -108,8 +108,8 @@ function readFromFile(fname) {
 }
 // データを更新
 function addToData(data, fname, request) {
-  var obj = { 'dataStr': data.dateStr, 'oya': data.oya,'k0':data.k0,'k0p1':data.k0p1,'k0p2':data.k0p2
-                                                      ,'k1':data.k1,'k1p1':data.k1p1,'k1p2':data.k1p2git };
+  var obj = { 'dateStr': data.dateStr, 'oya': data.oya,'k0':data.k0,'k0p1':data.k0p1,'k0p2':data.k0p2
+                                                      ,'k1':data.k1,'k1p1':data.k1p1,'k1p2':data.k1p2};
   var obj_str = JSON.stringify(obj);
   console.log('add data: ' + obj_str);
   message_data.unshift(obj_str);
