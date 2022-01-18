@@ -1,4 +1,5 @@
 var fs=require('fs');
+//var qs =require('querystring');
 var express = require('express');
 require('date-utils');
 var para ={
@@ -6,13 +7,13 @@ var para ={
 }
 
 var router = express.Router();
-//var qs =require("querystring");
+
 var dt = new Date();
 const max_num=2;
 const filename = '../mData.txt'; // データファイル名
 var message_data; // データ
 var dt ;
-
+message_data = "".split('\n');
 
  var data = {
       title: 'data/Index',
@@ -62,12 +63,8 @@ router.post('/post',(req, res, next)=> {
             data.k1=req.body['k0'];
             data.k1p1= req.body['k0p1'];
             data.k1p2= req.body['k0p2'];
-            
-            //dt = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
-            //data.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
-            
-            ////addToData(data,filename,req);
-            
+           
+            addToData(data,filename,req);
             break;            
     }
  
@@ -102,8 +99,6 @@ module.exports = router;
 
 
 // テキストファイルをロード
-
-
 function readFromFile(fname) {
    fs.readFile(fname, 'utf8', function(err, d) {
        message_data = d.split('\n');
@@ -112,8 +107,6 @@ function readFromFile(fname) {
        console.log(message_data.length);
  })
 }
-
-
 // データを更新
 function addToData(data, fname, request) {
   var obj = { 'dataStr': data.dateStr, 'oya': data.oya,'k0':data.k0,'k0p1':data.k0p1,'k0p2':data.k0p2
