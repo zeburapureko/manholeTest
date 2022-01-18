@@ -8,10 +8,10 @@ var para ={
 var router = express.Router();
 //var qs =require("querystring");
 var dt = new Date();
-const max_num=10;
+const max_num=2;
 const filename = '../mData.txt'; // データファイル名
 var message_data; // データ
-//readFromFile(filename);
+readFromFile(filename);
 var dt ;
 
 
@@ -125,7 +125,6 @@ function addToData(data, fname, request) {
   if (message_data.length > max_num) {
     message_data.pop();
   }
-  saveToFile(fname);
 }
 
 // データを保存
