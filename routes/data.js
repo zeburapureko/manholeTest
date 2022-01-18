@@ -66,7 +66,7 @@ router.post('/post',(req, res, next)=> {
             //dt = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
             //data.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
             
-            addToData(data,filename,req);
+            ////addToData(data,filename,req);
             
             break;            
     }
