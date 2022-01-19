@@ -27,6 +27,7 @@ message_data = "".split('\n');
       k1p2: "0"
     };
 
+
 /* GET users listing. */
 router.get('/view',(req, res, next)=> {
     var w={
@@ -51,7 +52,6 @@ router.post('/post',(req, res, next)=> {
     switch(id)
     {
         case "0":
-            
             dt= new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
             data.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
             data.k0=req.body['k0'];
