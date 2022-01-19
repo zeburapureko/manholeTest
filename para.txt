@@ -1,1 +1,1 @@
-{"kokiNum":"2"}
+{"kokiNum":"0"}
