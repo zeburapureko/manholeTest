@@ -7,7 +7,7 @@ var para_dt = {
       kokiNum:"0",
     };
 var dstr;
-readFile(filename);
+//readFile(filename);
 //writeFile(para_dt,filename);
 
 //para/index返信
