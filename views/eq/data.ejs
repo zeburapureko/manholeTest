@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+     <title>eqData</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+ <body class="container">
+  <header>
+    <h1 class="display-4">
+      eqData</h1>
+  </header>
+  <div role="main">
+      <form method="post" action="/eq/post">
+        <div class="form-group">
+        <label for="c">cnum:</label>
+        <input type="text" name="cnum" id="c" value=<%= cnum %>
+          class="form-control">
+      <input type="submit" value="TX" 
+        class="btn btn-primary">
+    </form>
+  </div>
+</body>
+</html>
