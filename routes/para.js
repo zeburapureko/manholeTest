@@ -7,7 +7,7 @@ var para_dt = {
       kokiNum:"0",
     };
 var dstr;
-//readFile(filename);
+readFile(filename);
 //writeFile(para_dt,filename);
 
 //para/index返信
@@ -39,8 +39,10 @@ module.exports = router;
 //*----------------------------------------------
 function readFile(fname) {
    fs.readFile(fname, 'utf8', function(err, d) {
+       console.log('err='+err);
+       console.log('d='+d);
        para_dt = JSON.parse(d);
-       console.log(para_dt);
+       console.log('para_dt=',para_dt);
  })
 }
 
