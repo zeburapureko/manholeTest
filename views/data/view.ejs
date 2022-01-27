@@ -7,10 +7,11 @@
   <body>
      <h1><%= title %></h1>
      <table class="table">
-      <% for(var key in message_data) { %>
+      <% for(var key in content_dt) { %>
       <tr>
+        <th><a href='/data/detail?no=<%= key %>'>詳細</a></th>
         <th><%= key %></th>
-        <td><%=message_data[key] %></td>
+        <td><%=content_dt[key] %></td>
       </tr>
       <% } %>
     </table>

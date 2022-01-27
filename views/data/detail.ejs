@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    
+  <script>
+    function getNum(data)
+    {
+      data=data+10;
+      return data;
+    }
+  </script>  
+
+  </head>
+  <body>
+     <h1><%= title %></h1>
+     <p>データNo <%= no %></p>
+     <p>日付 <%= data_con['dateStr'] %></p>
+     <P>cnum <%= data_con['oyaBat']  %></p>
+     <P>親機電源異常 <%= data_con['cnum']  %></p>
+     <P>親機通信エラーコード <%= data_con['oyaErrCode'] %></p>
+
+<h3>子機</h3>
+  <table  border="1" style="border-collapse: collapse">
+    <thead>
+      <tr>
+        <th>子機No</th>
+        <th>通信エラーコード</th>
+        <th>異常データ</th>
+        <th>エラーコード</th>
+        <th>圧力値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var i=0;i<2;i++) { %>  
+      <tr>
+        <td><%= i %></td>
+        <td><%= data_con['koki'][i]['commErrCode'] %></td>
+        <td><%= data_con['koki'][i]['k0_ijyo'] %></td>
+        <td><%= data_con['koki'][i]['k0_errCode'] %></td>
+        <td><%= data_con['koki'][i]['k0_press'] %></td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  
+  <h3>子機ポンプ</h3>
+  <table  border="1" style="border-collapse: collapse">
+    <thead>
+      <tr>
+        <th></th>
+        <% for(var i=0;i<2;i++) { %> 
+          <th colspan="2">子機No.<%= i %></th>
+      <% } %>
+      </tr>
+      <tr>
+        <th>No.</th>
+        <% for(var i=0;i<2;i++) { %> 
+          <th>　ch1　</th>
+          <th>　ch2　</th>
+      <% } %>
+      </tr>      
+    </thead>
+    <tbody>
+    <% for(var j=0;j<18;j++) { %>   
+    <tr>
+        <td><%= j+1 %></td>
+        <% for(var i=0;i<2;i++) { %> 
+          <td><%=data_con['koki'][i]['pompCH'][0]['pompDt'][j]['dt']  %></td>
+          <td><%=data_con['koki'][i]['pompCH'][1]['pompDt'][j]['dt']  %></td>
+        <% } %>
+    </tr>  
+    <% } %>
+   
+   
+    </tbody>
+  </table>
+
+  </body>
+</html>

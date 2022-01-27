@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+     <h1><%= title %></h1>
+     
+     <table>
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>日付</th>
+        <th>親機番号</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var key in content_dt) { %>
+      <tr>
+        <td><%= content_dt[key].no %></td>
+        <td><a href='/data/detail?no=<%= key %>'><%=　content_dt[key]['dateStr'] %></a></th>
+        <!--<td><%=　content_dt[key]['dateStr'] %></td>-->
+        <td><%=  content_dt[key]['cnum'] %></td>
+       
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+
+  </body>
+</html>
