@@ -324,7 +324,7 @@ function addToData(data) {
 }
 // テキストファイルをロード
 function readFromFile(fname) {
-   fs.readFile(fname, 'utf8', function(err, d) {
+   fs.readFile(fname, 'utf8', function(error, d) {
        message_data = d.split('\n');
        console.log(d);
        console.log(message_data);
