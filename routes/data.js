@@ -62,8 +62,8 @@ message_data =[];// "".split('\n');
         ]
     };
 
-message_data.push(dataDumy);    
-message_data.push(dataDumy2); 
+//message_data.push(dataDumy);    
+//message_data.push(dataDumy2); 
 //---------------------------------------------
 //処理用クラス初期化
 //---------------------------------------------
