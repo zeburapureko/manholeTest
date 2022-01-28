@@ -12,7 +12,7 @@ var eq_dt = {
     const filename = '../eqData.txt'; // データファイル名
     
 //saveToFile(filename,eq_dt);    
-readFromFile(filename);
+//readFromFile(filename);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
