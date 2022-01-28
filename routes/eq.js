@@ -52,6 +52,7 @@ function saveToFile(fname,dt) {
 }
 function readFromFile(fname) {
    fs.readFile(fname, 'utf8', function(error, data) {
+     if (error) { throw error; }
      eq_dt=JSON.parse(data);
  });
 }
