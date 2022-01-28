@@ -4,22 +4,40 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     
-  <script>
-    function getNum(data)
-    {
-      data=data+10;
-      return data;
-    }
-  </script>  
+ 
+
+ <style>
+      h1{color:teal}
+      td.pompDt{color:#aa00ff;}
+ </style>
 
   </head>
+  
   <body>
-     <h1><%= title %></h1>
-     <p>データNo <%= no %></p>
-     <p>日付 <%= data_con['dateStr'] %></p>
-     <P>cnum <%= data_con['oyaBat']  %></p>
-     <P>親機電源異常 <%= data_con['cnum']  %></p>
-     <P>親機通信エラーコード <%= data_con['oyaErrCode'] %></p>
+       
+    
+    <h1><%= title %></h1>
+    <p>データNo <%= no %></p>
+    <p>日付 <%= data_con['dateStr'] %></p>
+    <P>cnum <%= data_con['cnum']  %></p>
+     
+  <h3>親機</h3>
+  <table  border="1" style="border-collapse: collapse">
+    <thead>
+      <tr>
+        <th>親機電源異常</th>
+        <th>親機エラーコード</th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td><%= data_con['oyaBat']  %></td>
+      <td><%= data_con['oyaErrCode'] %></td>
+    </tr>
+    </tbody>
+    </table>
+    
+   
 
 <h3>子機</h3>
   <table  border="1" style="border-collapse: collapse">
@@ -72,8 +90,6 @@
         <% } %>
     </tr>  
     <% } %>
-   
-   
     </tbody>
   </table>
 

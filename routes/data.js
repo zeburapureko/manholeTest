@@ -11,7 +11,6 @@ var dt = new Date();
 const max_num=100;
 const filename = '../mData.txt'; // データファイル名
 var message_data; // データ
-var dt ;
 message_data =[];// "".split('\n');
 
  var data = {
@@ -32,7 +31,7 @@ message_data =[];// "".split('\n');
     };
  var dataDumy = {
       dateStr:"20220126155959",
-      oya: "0904461341100010C01",
+      oya: "090446134110010C01",
       koki:[
             {
                 k0: "00123",
@@ -48,7 +47,7 @@ message_data =[];// "".split('\n');
     };
      var dataDumy2 = {
       dateStr:"20220126235959",
-      oya: "1234567890100010C01",
+      oya: "123456789010010C01",
       koki:[
             {
                 k0: "00456",
@@ -63,21 +62,20 @@ message_data =[];// "".split('\n');
         ]
     };
 
-//message_data.push(dataDumy);    
-//message_data.push(dataDumy2); 
+message_data.push(dataDumy);    
+message_data.push(dataDumy2); 
 //---------------------------------------------
 //処理用クラス初期化
 //---------------------------------------------
-function data_con_init(d)
+function data_con_init(dt)
 {
-    d = {
+    dt = {
       dateStr:"",
       cnum: "",
       oyaBat:"",
       oyaErrCode:"",
-      oyaCommErrCode:"",
       koki:[2]
-    }
+    };
     
        var  koki ={
                     commErrCode:"",
@@ -85,15 +83,15 @@ function data_con_init(d)
                     k0_errCode:"",
                     k0_press:"",
                     pompCH:[2]
-       }
+       };
            var pompCH ={
                dtNum:"",
                pompDt:[18]
-           }
+           };
             var pompDt={
                 st:"",
                 dt:"",
-            }
+            };
 
     for(var k=0;k<2;k++)
     {
@@ -107,9 +105,9 @@ function data_con_init(d)
             }
             koki.pompCH[j]=JSON.parse(JSON.stringify(pompCH));
         }
-        d.koki[k]=JSON.parse(JSON.stringify(koki));
+        dt.koki[k]=JSON.parse(JSON.stringify(koki));
     }
-    return d;
+    return dt;
 }
 //---------------------------------------------
 //---------------------------------------------
@@ -139,12 +137,11 @@ router.get('/detail',(req,res,next)=>{
    data_con.dateStr=message_data[no].dateStr;
    data_con.cnum=message_data[no].oya.substr(0,11);
    data_con.oyaBat=message_data[no].oya.substr(11,1);
-   data_con.oyaErrCode=message_data[no].oya.substr(12,1);
-   data_con.oyaCommErrCode=message_data[no].oya.substr(13,2);
-   
+   data_con.oyaErrCode=message_data[no].oya.substr(12,2);
+
     for(var i=0;i<2;i++)//子機数
     {
-        data_con.koki[i].commErrCode=message_data[no].oya.substr(15+(i*2),2);
+        data_con.koki[i].commErrCode=message_data[no].oya.substr(14+(i*2),2);
         data_con.koki[i].k0_ijyo=message_data[no].koki[i].k0.substr(0,1);
         data_con.koki[i].k0_errCode=message_data[no].koki[i].k0.substr(1,1);
         data_con.koki[i].k0_press=message_data[no].koki[i].k0.substr(2,3);
@@ -157,7 +154,7 @@ router.get('/detail',(req,res,next)=>{
         }
         //ポンプCH1
         data_con.koki[i].pompCH[1].dtNum=message_data[no].koki[i].k0p2.substr(0,1);
-        for(var j=0;j<data_con.koki[i].pompCH[1].dtNum;j++)
+        for( j=0;j<data_con.koki[i].pompCH[1].dtNum;j++)
         {
             data_con.koki[i].pompCH[1].pompDt[j].st=message_data[no].koki[i].k0p2.substr(1+(j*7),1);
             data_con.koki[i].pompCH[1].pompDt[j].dt=message_data[no].koki[i].k0p2.substr(2+(j*7),6);
@@ -188,7 +185,7 @@ router.get('/print',(req, res, next)=> {
         content_dt.push(wk_dt);
     }
     var content={
-        title:'data/print',
+        title:'マンホールデータ一覧',
         content_dt:content_dt
     };
     res.render('data/print', content);

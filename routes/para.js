@@ -15,10 +15,7 @@ readFile(filename);
   res.render('para/index', { title: 'para/index' });
 });*/
 
-//para/response返信
-router.get('/', function(req, res, next) {
-  res.render('para/response',para_dt);
-});
+
 //para/update
 router.get('/update',(req, res, next)=> {
     res.render('para/update', para_dt);

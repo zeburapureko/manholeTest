@@ -10,12 +10,25 @@
       paraUpdate</h1>
   </header>
   <div role="main">
-    <form method="post" action="/para/post">
+    <form method="post" action="/eq/para/post">
       <div class="form-group">
         <label for="kokiNum">kokiNum:</label>
         <input type="text" name="kokiNum" id="kokiNum" value=<%= kokiNum %>
           class="form-control">
       </div>
+      
+       <div class="form-group">
+        <label for="url">url:</label>
+        <input type="text" name="url" id="url" value=<%= url %>
+          class="form-control">
+      </div>
+      
+       <div class="form-group">
+        <label for="press">press:</label>
+        <input type="text" name="press" id="press" value=<%= press %>
+          class="form-control">
+      </div>
+      
       <input type="submit" value="TX" 
         class="btn btn-primary">
     </form>
