@@ -34,12 +34,12 @@ message_data =[];// "".split('\n');
       oya: "090446134110010C01",
       koki:[
             {
-                k0: "00123",
+                k0: "40123",
                 k0p1: "11125959",
                 k0p2: "3112595801259571125956",
             },
             {
-                k0: "00222",
+                k0: "70222",
                 k0p1: "11125959",
                 k0p2: "0",
             }
@@ -62,8 +62,8 @@ message_data =[];// "".split('\n');
         ]
     };
 
-//message_data.push(dataDumy);    
-//message_data.push(dataDumy2); 
+message_data.push(dataDumy);    
+message_data.push(dataDumy2); 
 //---------------------------------------------
 //処理用クラス初期化
 //---------------------------------------------
@@ -72,16 +72,17 @@ function data_con_init(dt)
     dt = {
       dateStr:"",
       cnum: "",
-      oyaBat:"",
-      oyaErrCode:"",
+      oyaBat:{str:"",txt:"",fColor:"black",bkColor:"white"},
+      oyaErrCode:{str:"",txt:"",bkColor:"white"},
       koki:[2]
     };
     
        var  koki ={
-                    commErrCode:"",
-                    k0_ijyo: "",
-                    k0_errCode:"",
-                    k0_press:"",
+                    commErrCode:{str:"",txt:"",bkColor:"white"},
+                    k0_errCode:{str:"",txt:"",bkColor:"white"},
+                    k0_bat:{str:"",txt:"",bkColor:"white"},
+                    k0_press:{str:"",txt:"",bkColor:"white"},
+                    k0_teiden:{str:"",txt:"",bkColor:"white"},
                     pompCH:[2]
        };
            var pompCH ={
@@ -91,7 +92,10 @@ function data_con_init(dt)
             var pompDt={
                 st:"",
                 dt:"",
+                fColor:"black",
+                bkColor:"white",
             };
+            
 
     for(var k=0;k<2;k++)
     {
@@ -99,9 +103,12 @@ function data_con_init(dt)
         {
             for(var i=0;i<18;i++)
             {
-                    pompDt.st=0;    
+                    pompDt.st=0;   
+                    pompDt.bkColor='white';
+                    pompDt.fColor='black';
                     pompDt.dt="";
                     pompCH.pompDt[i]=JSON.parse(JSON.stringify(pompDt));
+                    
             }
             koki.pompCH[j]=JSON.parse(JSON.stringify(pompCH));
         }
@@ -123,6 +130,7 @@ function getDate(dt)
 }
 
 //---------------------------------------------
+//detail表示
 //---------------------------------------------
 router.get('/detail',(req,res,next)=>{
    var no=req.query.no;
@@ -136,34 +144,133 @@ router.get('/detail',(req,res,next)=>{
 
    data_con.dateStr=message_data[no].dateStr;
    data_con.cnum=message_data[no].oya.substr(0,11);
-   data_con.oyaBat=message_data[no].oya.substr(11,1);
-   data_con.oyaErrCode=message_data[no].oya.substr(12,2);
+   data_con.oyaBat.str=message_data[no].oya.substr(11,1);
+   var wk=parseInt(data_con.oyaBat.str);
+   if(wk==1)
+   {
+       data_con.oyaBat.txt='Low';
+       data_con.oyaBat.bkColor='Red';
+       data_con.oyaBat.fColor='white';
+   }
+   else
+   {
+       data_con.oyaBat.txt='Hi';
+       data_con.oyaBat.bkColor='blue';
+       data_con.oyaBat.fColor='white';
+   }
+   data_con.oyaErrCode.str=message_data[no].oya.substr(12,2);
+   wk=parseInt(data_con.oyaErrCode.str,16);
+   if(wk==1)
+   {
+       data_con.oyaErrCode.bkColor='Blue';
+   }
+   else
+   {
+       data_con.oyaErrCode.bkColor='orangered';
+   }
 
     for(var i=0;i<2;i++)//子機数
     {
-        data_con.koki[i].commErrCode=message_data[no].oya.substr(14+(i*2),2);
-        data_con.koki[i].k0_ijyo=message_data[no].koki[i].k0.substr(0,1);
-        data_con.koki[i].k0_errCode=message_data[no].koki[i].k0.substr(1,1);
-        data_con.koki[i].k0_press=message_data[no].koki[i].k0.substr(2,3);
-        //ポンプCH0
-        data_con.koki[i].pompCH[0].dtNum=message_data[no].koki[i].k0p1.substr(0,1);
-        for(var j=0;j<data_con.koki[i].pompCH[0].dtNum;j++)
+        //子機通信エラーコード
+        data_con.koki[i].commErrCode.str=message_data[no].oya.substr(14+(i*2),2);
+        var commErrCode=parseInt(data_con.koki[i].commErrCode.str,16);
+        if(commErrCode==1)
         {
-            data_con.koki[i].pompCH[0].pompDt[j].st=message_data[no].koki[i].k0p1.substr(1+(j*7),1);
-            data_con.koki[i].pompCH[0].pompDt[j].dt=message_data[no].koki[i].k0p1.substr(2+(j*7),6);
+           data_con.koki[i].commErrCode.bkColor='Blue';
+       
+            //子機エラーコード
+            data_con.koki[i].k0_errCode.str=message_data[no].koki[i].k0.substr(1,1);
+            wk=parseInt(data_con.koki[i].k0_errCode.str);
+            if(wk==0)
+            {
+                data_con.koki[i].k0_errCode.bkColor='Blue';
+            }
+            else
+            {
+                data_con.koki[i].k0_errCode.bkColor='orangered';
+            }
+            //異常フラグ
+            var str=message_data[no].koki[i].k0.substr(0,1);
+            var ijyoFlg=parseInt(str);
+            //Bit0.子機電源
+            if((ijyoFlg & 1)==1)
+            {
+                data_con.koki[i].k0_bat.txt='Low';
+                data_con.koki[i].k0_bat.bkColor='orangered';
+            }
+            else
+            {
+                data_con.koki[i].k0_bat.txt='Hi';
+                data_con.koki[i].k0_bat.bkColor='Blue';
+            }
+            //Bit1.press
+            data_con.koki[i].k0_press.str=message_data[no].koki[i].k0.substr(2,3);
+            var f=parseFloat(data_con.koki[i].k0_press.str)/10;
+            data_con.koki[i].k0_press.txt=f.toFixed(1);
+            if((ijyoFlg & 2)==2)
+            {
+                data_con.koki[i].k0_press.bkColor='orangered';
+            }
+            else
+            {
+                data_con.koki[i].k0_press.bkColor='Blue';
+            }
+            //bit2.停電
+            if((ijyoFlg & 4)==4)
+            {
+                data_con.koki[i].k0_teiden.bkColor='orangered';
+                data_con.koki[i].k0_teiden.txt='停電';
+            }
+            else
+            {
+                data_con.koki[i].k0_teiden.bkColor='Blue';
+                data_con.koki[i].k0_teiden.txt='';
+            }
+            //ポンプCH0
+            data_con.koki[i].pompCH[0].dtNum=message_data[no].koki[i].k0p1.substr(0,1);
+            for(var j=0;j<data_con.koki[i].pompCH[0].dtNum;j++)
+            {
+                data_con.koki[i].pompCH[0].pompDt[j].st=message_data[no].koki[i].k0p1.substr(1+(j*7),1);
+                data_con.koki[i].pompCH[0].pompDt[j].dt=message_data[no].koki[i].k0p1.substr(2+(j*7),6);
+                if(data_con.koki[i].pompCH[0].pompDt[j].st==1)
+                {
+                    data_con.koki[i].pompCH[0].pompDt[j].bkColor='Blue';
+                    data_con.koki[i].pompCH[0].pompDt[j].fColor='white';
+                }
+                else
+                {
+                    data_con.koki[i].pompCH[0].pompDt[j].bkColor='white';
+                    data_con.koki[i].pompCH[0].pompDt[j].fColor='Black';
+                }
+            }
+            //ポンプCH1
+            data_con.koki[i].pompCH[1].dtNum=message_data[no].koki[i].k0p2.substr(0,1);
+            for( j=0;j<data_con.koki[i].pompCH[1].dtNum;j++)
+            {
+                data_con.koki[i].pompCH[1].pompDt[j].st=message_data[no].koki[i].k0p2.substr(1+(j*7),1);
+                data_con.koki[i].pompCH[1].pompDt[j].dt=message_data[no].koki[i].k0p2.substr(2+(j*7),6);
+                if(data_con.koki[i].pompCH[1].pompDt[j].st==1)
+                {
+                    data_con.koki[i].pompCH[1].pompDt[j].bkColor='Blue';
+                    data_con.koki[i].pompCH[1].pompDt[j].fColor='white';
+                }
+                else
+                {
+                    data_con.koki[i].pompCH[1].pompDt[j].bkColor='white';
+                    data_con.koki[i].pompCH[1].pompDt[j].fColor='Black';
+                }
+            }
         }
-        //ポンプCH1
-        data_con.koki[i].pompCH[1].dtNum=message_data[no].koki[i].k0p2.substr(0,1);
-        for( j=0;j<data_con.koki[i].pompCH[1].dtNum;j++)
+        else
         {
-            data_con.koki[i].pompCH[1].pompDt[j].st=message_data[no].koki[i].k0p2.substr(1+(j*7),1);
-            data_con.koki[i].pompCH[1].pompDt[j].dt=message_data[no].koki[i].k0p2.substr(2+(j*7),6);
+           data_con.koki[i].commErrCode.bkColor='orangered';
         }
     }
 
+var intNo = parseInt(no)+1;
    var content= {
        title:'data/detail',
-       no:no,
+       no:intNo,
        data_con:data_con
    }
    res.render('data/detail',content);

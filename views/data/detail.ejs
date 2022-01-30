@@ -4,67 +4,86 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     
- 
-
  <style>
       h1{color:teal}
-      td.pompDt{color:#aa00ff;}
- </style>
+      th{
+        color: black;
+        background-color:lightgray;
+      }
+      td
+      {
+        text-align: center;
+      }
+      td.oya{color:White;}
 
+ </style>
+<script>
+    function changeColorFlg(item, st ) {
+      var color='white';
+      if(st!=1)
+       color='Red'
+      document.getElementById(item).style.backgroundColor = color;
+    }
+    function changeColorErrCd(item, st ) {
+      var color='white';
+      if(st !=1)
+       color='Red'
+    document.getElementById(item).style.backgroundColor = color;
+    }
+</script>
   </head>
   
   <body>
-       
-    
     <h1><%= title %></h1>
     <p>データNo <%= no %></p>
     <p>日付 <%= data_con['dateStr'] %></p>
-    <P>cnum <%= data_con['cnum']  %></p>
-     
+
   <h3>親機</h3>
   <table  border="1" style="border-collapse: collapse">
     <thead>
       <tr>
+        <th>親機番号</th>
         <th>親機電源異常</th>
         <th>親機エラーコード</th>
       </tr>
     </thead>
     <tbody>
      <tr>
-      <td><%= data_con['oyaBat']  %></td>
-      <td><%= data_con['oyaErrCode'] %></td>
+      <td><font color='Black'><%= data_con['cnum']  %></font></td>
+      <td bgcolor=<%= data_con['oyaBat']['bkColor']     %>><font color=<%= data_con['oyaBat']['fColor']     %> ><%= data_con['oyaBat']['txt'] %></font></td>
+      <td bgcolor=<%= data_con['oyaErrCode']['bkColor'] %>><font color="White"><%= data_con['oyaErrCode']['str'] %></font></td>
     </tr>
     </tbody>
     </table>
     
-   
-
 <h3>子機</h3>
   <table  border="1" style="border-collapse: collapse">
     <thead>
       <tr>
         <th>子機No</th>
         <th>通信エラーコード</th>
-        <th>異常データ</th>
         <th>エラーコード</th>
+        <th>停電</th>
         <th>圧力値</th>
+        <th>電源異常</th>
       </tr>
-    </thead>
     <tbody>
       <% for(var i=0;i<2;i++) { %>  
       <tr>
+    </thead>
         <td><%= i %></td>
-        <td><%= data_con['koki'][i]['commErrCode'] %></td>
-        <td><%= data_con['koki'][i]['k0_ijyo'] %></td>
-        <td><%= data_con['koki'][i]['k0_errCode'] %></td>
-        <td><%= data_con['koki'][i]['k0_press'] %></td>
+        <td bgcolor=<%=data_con['koki'][i]['commErrCode']['bkColor'] %>><font color="White"><%= data_con['koki'][i]['commErrCode']['str'] %></font></td>
+        <td bgcolor=<%=data_con['koki'][i]['k0_errCode']['bkColor'] %>><font color="White"><%= data_con['koki'][i]['k0_errCode']['str'] %></font></td>
+        <td bgcolor=<%=data_con['koki'][i]['k0_teiden']['bkColor'] %>><font color="White"><%= data_con['koki'][i]['k0_teiden']['txt'] %></font></td>
+        <td bgcolor=<%=data_con['koki'][i]['k0_press']['bkColor'] %>><font color="White"><%= data_con['koki'][i]['k0_press']['txt'] %></font></td>
+        <td bgcolor=<%=data_con['koki'][i]['k0_bat']['bkColor'] %>><font color="White"><%= data_con['koki'][i]['k0_bat']['txt'] %></font></td>
       </tr>
       <% } %>
     </tbody>
   </table>
   
   <h3>子機ポンプ</h3>
-  <table  border="1" style="border-collapse: collapse">
+  <table border="1" style="border-collapse: collapse">
     <thead>
       <tr>
         <th></th>
@@ -85,13 +104,20 @@
     <tr>
         <td><%= j+1 %></td>
         <% for(var i=0;i<2;i++) { %> 
-          <td><%=data_con['koki'][i]['pompCH'][0]['pompDt'][j]['dt']  %></td>
-          <td><%=data_con['koki'][i]['pompCH'][1]['pompDt'][j]['dt']  %></td>
+          <td bgcolor=<%=data_con['koki'][i]['pompCH'][0]['pompDt'][j]['bkColor']  %>>
+            <font color=<%=data_con['koki'][i]['pompCH'][0]['pompDt'][j]['fColor']  %>>
+            <%=data_con['koki'][i]['pompCH'][0]['pompDt'][j]['dt']  %></font></td>
+            
+           <td bgcolor=<%=data_con['koki'][i]['pompCH'][1]['pompDt'][j]['bkColor']  %>>
+            <font color=<%=data_con['koki'][i]['pompCH'][1]['pompDt'][j]['fColor']  %>>
+            <%=data_con['koki'][i]['pompCH'][1]['pompDt'][j]['dt']  %></font></td>
+            
         <% } %>
     </tr>  
     <% } %>
     </tbody>
   </table>
+ 
 
   </body>
 </html>
