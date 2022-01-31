@@ -1,9 +1,12 @@
+const KOKI_NUM=10;
+const POMP_DT_NUM=18;
+const POMP_CH_NUM=2;
+
 var fs=require('fs');
 var express = require('express');
 require('date-utils');
-var para ={
-    id:0
-}
+
+var eq = require('./eq');
 
 var router = express.Router();
 
@@ -13,22 +16,20 @@ const filename = '../mData.txt'; // データファイル名
 var message_data; // データ
 message_data =[];// "".split('\n');
 
- var data = {
+ var postData = {
       dateStr:"",
       oya: "0000000000000",
-      koki:[
-            {
-                k0: "00000",
-                k0p1: "0",
-                k0p2: "0",
-            },
-            {
-                k0: "00000",
+      koki:[KOKI_NUM]
+    };
+    var ko={    k0: "00000",
                 k0p1: "0",
                 k0p2: "0",
             }
-        ]
-    };
+    for(var i=0;i<KOKI_NUM;i++)
+    {
+        postData.koki[i]=JSON.parse(JSON.stringify(ko));    
+    }
+    
  var dataDumy = {
       dateStr:"20220126155959",
       oya: "090446134110010C01",
@@ -83,11 +84,11 @@ function data_con_init(dt)
                     k0_bat:{str:"",txt:"",bkColor:"white"},
                     k0_press:{str:"",txt:"",bkColor:"white"},
                     k0_teiden:{str:"",txt:"",bkColor:"white"},
-                    pompCH:[2]
+                    pompCH:[POMP_CH_NUM]
        };
            var pompCH ={
                dtNum:"",
-               pompDt:[18]
+               pompDt:[POMP_DT_NUM]
            };
             var pompDt={
                 st:"",
@@ -99,9 +100,9 @@ function data_con_init(dt)
 
     for(var k=0;k<2;k++)
     {
-        for(var j=0;j<2;j++) 
+        for(var j=0;j<POMP_CH_NUM;j++) 
         {
-            for(var i=0;i<18;i++)
+            for(var i=0;i<POMP_DT_NUM;i++)
             {
                     pompDt.st=0;   
                     pompDt.bkColor='white';
@@ -267,12 +268,12 @@ router.get('/detail',(req,res,next)=>{
         }
     }
 
-var intNo = parseInt(no)+1;
-   var content= {
+    var intNo = parseInt(no)+1;
+    var content= {
        title:'data/detail',
        no:intNo,
        data_con:data_con
-   }
+   };
    res.render('data/detail',content);
 });
 
@@ -314,39 +315,42 @@ router.get('/view',(req, res, next)=> {
 });
 
 router.get('/',(req, res, next)=> {
-    data.title= 'data/index'
-    res.render('data/index', data);
+    postData.title= 'data/index'
+    res.render('data/index', postData);
 });
 
 router.get('/update',(req, res, next)=> {
-    data.title= 'data/update'
-    res.render('data/update', data);
+    postData.title= 'data/update'
+    res.render('data/update', postData);
 });
-
+//--------------------
+//post
+//--------------------
 router.post('/post',(req, res, next)=> {
     var id=req.body['id'];
-    data.oya=req.body['oya'];
+    postData.oya=req.body['oya'];
     switch(id)
     {
         case "0":
             dt= new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
-            data.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
-            data.koki[0].k0=req.body['k0'];
-            data.koki[0].k0p1= req.body['k0p1'];
-            data.koki[0].k0p2= req.body['k0p2'];
+            postData.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
+            postData.koki[0].k0=req.body['k0'];
+            postData.koki[0].k0p1= req.body['k0p1'];
+            postData.koki[0].k0p2= req.body['k0p2'];
             break;
         case "1":
-            data.koki[1].k0=req.body['k0'];
-            data.koki[1].k0p1= req.body['k0p1'];
-            data.koki[1].k0p2= req.body['k0p2'];
+            postData.koki[1].k0=req.body['k0'];
+            postData.koki[1].k0p1= req.body['k0p1'];
+            postData.koki[1].k0p2= req.body['k0p2'];
            
-            jsonAddData(data);
             break;            
     }
- 
-    req.session.data=data;
+    if(id==1)
+            jsonAddData(postData);
+   
+    req.session.data=postData;
     //res.render('data/index', data);
-    res.render('data/response',data);
+    res.render('data/response',postData);
     console.log(req.body);
   
 });
@@ -358,14 +362,16 @@ router.get('/response',(req, res, next)=> {
     // data =req.session.data;
     //}
     
-    res.render('data/response', data);
+    res.render('data/response', postData);
 });
 
 module.exports = router;
 
 
 
-
+//--------------------
+//function
+//--------------------
 function jsonAddData(data)
 {
     var obj = {
@@ -397,7 +403,6 @@ function jsonAddData(data)
     if(message_data.length>max_num)
         message_data.pop();
 }
-
 
 
 function jtoS()

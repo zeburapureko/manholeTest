@@ -8,7 +8,7 @@ var eq_dt = {
       kokiNum:"2",
       press:"010"
     };
-    
+   
     const filename = '../eqData.txt'; // データファイル名
     
 //saveToFile(filename,eq_dt);    
