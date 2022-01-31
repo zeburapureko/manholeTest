@@ -7,14 +7,13 @@ var para_dt = {
       kokiNum:"0",
     };
 var dstr;
-readFile(filename);
+//readFile(filename);
 //writeFile(para_dt,filename);
 
 //para/index返信
 /*router.get('/', function(req, res, next) {
   res.render('para/index', { title: 'para/index' });
 });*/
-
 
 //para/update
 router.get('/update',(req, res, next)=> {
@@ -28,12 +27,13 @@ router.post('/post',(req, res, next)=> {
     console.log(req.body);
 });
 
-
-
-
 module.exports = router;
 
-//*----------------------------------------------
+
+
+//----------------------------------------------
+//function
+//----------------------------------------------
 function readFile(fname) {
    fs.readFile(fname, 'utf8', function(err, d) {
        console.log('err='+err);
