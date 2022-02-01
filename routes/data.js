@@ -21,7 +21,7 @@ message_data =[];// "".split('\n');
       oya: "0000000000000",
       koki:[KOKI_NUM]
     };
-    var ko={    k0: "00000",
+    var ko={    k0: "000000",
                 k0p1: "0",
                 k0p2: "0",
             }
