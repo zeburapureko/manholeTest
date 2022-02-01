@@ -315,12 +315,10 @@ router.get('/view',(req, res, next)=> {
 });
 
 router.get('/',(req, res, next)=> {
-    postData.title= 'data/index'
     res.render('data/index', postData);
 });
 
 router.get('/update',(req, res, next)=> {
-    postData.title= 'data/update'
     res.render('data/update', postData);
 });
 //--------------------
