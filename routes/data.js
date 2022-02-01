@@ -367,22 +367,21 @@ function jsonAddData(psdata)
     var obj = {
       dateStr:"",
       oya: "0000000000000",
-      koki:[
-            {
-                k0: "00000",
-                k0p1: "0",
-                k0p2: "0",
-            },
-            {
-                k0: "00000",
-                k0p1: "0",
-                k0p2: "0",
-            }
-        ]
+      koki:[]
     };
+    var ko={    k0: "000000",
+                k0p1: "0",
+                k0p2: "0",
+            };
+            
+    for(var i=0;i<2;i++)
+    {
+        obj.koki[i]=JSON.parse(JSON.stringify(ko));    
+    }
+    
     obj.dateStr=psdata.dateStr;
     obj.oya=psdata.oya;
-    for(var i=0;i<2;i++)
+    for( i=0;i<2;i++)
     {
         obj.koki[i].k0=psdata.koki[i].k0;
         obj.koki[i].k0p1=psdata.koki[i].k0p1;
