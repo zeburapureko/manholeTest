@@ -327,21 +327,14 @@ router.get('/update',(req, res, next)=> {
 router.post('/post',(req, res, next)=> {
     var id=req.body['id'];
     postData.oya=req.body['oya'];
-    switch(id)
-    {
-        case "0":
+    
+    postData.koki[id].k0=req.body['k0'];
+    postData.koki[id].k0p1= req.body['k0p1'];
+    postData.koki[id].k0p2= req.body['k0p2'];
+
+    if(id==0){
             dt= new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
             postData.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
-            postData.koki[0].k0=req.body['k0'];
-            postData.koki[0].k0p1= req.body['k0p1'];
-            postData.koki[0].k0p2= req.body['k0p2'];
-            break;
-        case "1":
-            postData.koki[1].k0=req.body['k0'];
-            postData.koki[1].k0p1= req.body['k0p1'];
-            postData.koki[1].k0p2= req.body['k0p2'];
-           
-            break;            
     }
     if(id==1)
             jsonAddData(postData);
@@ -366,11 +359,10 @@ router.get('/response',(req, res, next)=> {
 module.exports = router;
 
 
-
 //--------------------
 //function
 //--------------------
-function jsonAddData(data)
+function jsonAddData(psdata)
 {
     var obj = {
       dateStr:"",
@@ -388,13 +380,13 @@ function jsonAddData(data)
             }
         ]
     };
-    obj.dateStr=data.dateStr;
-    obj.oya=data.oya;
+    obj.dateStr=psdata.dateStr;
+    obj.oya=psdata.oya;
     for(var i=0;i<2;i++)
     {
-        obj.koki[i].k0=data.koki[i].k0;
-        obj.koki[i].k0p1=data.koki[i].k0p1;
-        obj.koki[i].k0p2=data.koki[i].k0p2;
+        obj.koki[i].k0=psdata.koki[i].k0;
+        obj.koki[i].k0p1=psdata.koki[i].k0p1;
+        obj.koki[i].k0p2=psdata.koki[i].k0p2;
     }
     console.log('obj:'+obj);
     message_data.unshift(obj);

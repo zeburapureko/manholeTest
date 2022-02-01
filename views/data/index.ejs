@@ -9,15 +9,12 @@
     <p>date <%= dateStr %></p>
     <p>oya <%= oya %></p>
     
-    <h2>id0</h2>
-    <p>k0 <%= koki[0]['k0'] %></p>
-    <p>k0p1 <%= koki[0]['k0p1'] %></p>
-    <p>k0p2 <%= koki[0]['k0p2'] %></p>
-    
-    <h2>id1</h2>
-    <p>k1 <%= koki[0]['k1'] %></p>
-    <p>k1p1 <%= koki[1]['k0p1'] %></p>
-    <p>k1p2 <%= koki[1]['k0p2'] %></p>
+    <% for(var key in koki) { %>
+      <h3>id[<%=key%>]</h2>
+      <P>k0[<%=key%>]  <%= koki[key]['k0']%></P>
+      <P>k0p1[<%=key%>]  <%= koki[key]['k0p1']%></P>
+      <P>k0p2[<%=key%>]  <%= koki[key]['k0p2']%></P>
+    <% } %>
    
   </body>
 </html>
