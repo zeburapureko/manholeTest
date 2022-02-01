@@ -5,10 +5,12 @@ const POMP_CH_NUM=2;
 var fs=require('fs');
 var express = require('express');
 require('date-utils');
+const NodeMailer = require('nodemailer');
 
-var eq = require('./eq');
 
 var router = express.Router();
+
+
 
 var dt = new Date();
 const max_num=100;
@@ -343,7 +345,14 @@ router.post('/post',(req, res, next)=> {
     //res.render('data/index', data);
     res.render('data/response',postData);
     console.log(req.body);
-  
+    
+    if(id==1)
+    {
+        var subject='親機'+postData.oya.substr(0,11)+'異常';
+        sendMail(subject,'message');
+    }
+    console.log(global.ee);
+
 });
 
 router.get('/response',(req, res, next)=> {
@@ -440,3 +449,48 @@ function saveToFile(fname) {
   });
 }
 
+
+
+// メール送信関数
+function sendMailsub(smtpData, mailData) {
+ 
+  // SMTPサーバの情報をまとめる
+  const transporter = NodeMailer.createTransport(smtpData)
+ 
+  // メール送信
+  transporter.sendMail(mailData, function (error, info) {
+    if (error) {
+      // エラー処理
+      console.log(error)
+    } else {
+      // 送信時処理
+      console.log('Email sent: ' + info.response)
+    }
+  })
+}
+
+function sendMail(subjectTx,textTx) {
+  var smtpData = {
+        host: 'smtp.gmail.com',
+        port: '465',
+        secure: true, // SSL
+        auth: {
+            user: 'pureko7@gmail.com',
+            pass: 'imiaevrvpodmbhuj'
+        }
+    };
+ 
+  // 送信内容を作成
+  const mailData = {
+    from: '"manholeIoT<' + smtpData.auth.user + '>', // 送信元名
+    to: global.eq_dt.email,                     // 送信先
+    subject: subjectTx,                              // 件名
+    text: 'http://54.150.157.88:8080',               // 通常のメール本文
+    html: "<a href='http://54.150.157.88:8080'>manholeIoTへ</a>",               // HTMLメール
+  }
+
+  // メールを送信
+  sendMailsub(smtpData, mailData)
+}
+
+  
