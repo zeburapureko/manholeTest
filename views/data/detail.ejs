@@ -68,7 +68,7 @@
         <th>電源異常</th>
       </tr>
     <tbody>
-      <% for(var i=0;i<2;i++) { %>  
+      <% for(var i=0;i<data_con.kokiNum;i++) { %>  
       <tr>
     </thead>
         <td><%= i %></td>
@@ -87,13 +87,13 @@
     <thead>
       <tr>
         <th></th>
-        <% for(var i=0;i<2;i++) { %> 
+        <% for(var i=0;i<data_con.kokiNum;i++) { %> 
           <th colspan="2">子機No.<%= i %></th>
       <% } %>
       </tr>
       <tr>
         <th>No.</th>
-        <% for(var i=0;i<2;i++) { %> 
+        <% for(var i=0;i<data_con.kokiNum;i++) { %> 
           <th>　ch1　</th>
           <th>　ch2　</th>
       <% } %>
@@ -103,7 +103,7 @@
     <% for(var j=0;j<18;j++) { %>   
     <tr>
         <td><%= j+1 %></td>
-        <% for(var i=0;i<2;i++) { %> 
+        <% for(var i=0;i<data_con.kokiNum;i++) { %> 
           <td bgcolor=<%=data_con['koki'][i]['pompCH'][0]['pompDt'][j]['bkColor']  %>>
             <font color=<%=data_con['koki'][i]['pompCH'][0]['pompDt'][j]['fColor']  %>>
             <%=data_con['koki'][i]['pompCH'][0]['pompDt'][j]['dt']  %></font></td>

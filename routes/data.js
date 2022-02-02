@@ -77,7 +77,8 @@ function data_con_init(dt)
       cnum: "",
       oyaBat:{str:"",txt:"",fColor:"black",bkColor:"white"},
       oyaErrCode:{str:"",txt:"",bkColor:"white"},
-      koki:[2]
+      kokiNum:global.eq_dt.kokiNum,
+      koki:[global.eq_dt.kokiNum]
     };
     
        var  koki ={
@@ -100,7 +101,7 @@ function data_con_init(dt)
             };
             
 
-    for(var k=0;k<2;k++)
+    for(var k=0;k<global.eq_dt.kokiNum;k++)
     {
         for(var j=0;j<POMP_CH_NUM;j++) 
         {
@@ -172,7 +173,7 @@ router.get('/detail',(req,res,next)=>{
        data_con.oyaErrCode.bkColor='orangered';
    }
 
-    for(var i=0;i<2;i++)//子機数
+    for(var i=0;i<global.eq_dt.kokiNum;i++)//子機数
     {
         //子機通信エラーコード
         data_con.koki[i].commErrCode.str=message_data[no].oya.substr(14+(i*2),2);
@@ -338,7 +339,7 @@ router.post('/post',(req, res, next)=> {
             dt= new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
             postData.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
     }
-    if(id==1)
+    if(id==global.eq_dt.kokiNum-1)
             jsonAddData(postData);
    
     req.session.data=postData;
@@ -346,7 +347,7 @@ router.post('/post',(req, res, next)=> {
     res.render('data/response',postData);
     console.log(req.body);
     
-    if(id==1)
+    if(id==global.eq_dt.kokiNum-1)
     {
         var subject='親機'+postData.oya.substr(0,11)+'異常';
         sendMail(subject,'message');
@@ -383,14 +384,14 @@ function jsonAddData(psdata)
                 k0p2: "0",
             };
             
-    for(var i=0;i<2;i++)
+    for(var i=0;i<global.eq_dt.kokiNum;i++)
     {
         obj.koki[i]=JSON.parse(JSON.stringify(ko));    
     }
     
     obj.dateStr=psdata.dateStr;
     obj.oya=psdata.oya;
-    for( i=0;i<2;i++)
+    for( i=0;i<global.eq_dt.kokiNum;i++)
     {
         obj.koki[i].k0=psdata.koki[i].k0;
         obj.koki[i].k0p1=psdata.koki[i].k0p1;

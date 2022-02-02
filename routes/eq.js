@@ -39,6 +39,8 @@ router.post('/para/post',(req, res, next)=> {
     global.eq_dt.kokiNum=req.body['kokiNum'];
     global.eq_dt.press=req.body['press'];
     
+    var c=req.body['emailSw'];
+    
     saveToFile(filename,global.eq_dt);    
     res.render('eq/response',global.eq_dt);
     console.log(req.body);
