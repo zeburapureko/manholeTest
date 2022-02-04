@@ -333,12 +333,13 @@ router.post('/post',(req, res, next)=> {
     postData.koki[id].k0p1= req.body['k0p1'];
     postData.koki[id].k0p2= req.body['k0p2'];
 
-    if(id==0){
+    if(id==0){}
+    if(id==global.eq_dt.kokiNum-1)
+    {
             dt= new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
             postData.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
-    }
-    if(id==global.eq_dt.kokiNum-1)
             jsonAddData(postData);
+    }
    
     req.session.data=postData;
     //res.render('data/index', data);
