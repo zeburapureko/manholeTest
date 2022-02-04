@@ -438,7 +438,7 @@ function readFromFile(fname) {
        console.log(d);
        console.log(message_data);
        console.log(message_data.length);
- })
+ });
 }
 // データを保存
 function saveToFile(fname) {
@@ -454,18 +454,18 @@ function saveToFile(fname) {
 function sendMailsub(smtpData, mailData) {
  
   // SMTPサーバの情報をまとめる
-  const transporter = NodeMailer.createTransport(smtpData)
+  const transporter = NodeMailer.createTransport(smtpData);
  
   // メール送信
   transporter.sendMail(mailData, function (error, info) {
     if (error) {
       // エラー処理
-      console.log(error)
+      console.log(error);
     } else {
       // 送信時処理
-      console.log('Email sent: ' + info.response)
+      console.log('Email sent: ' + info.response);
     }
-  })
+  });
 }
 
 function sendMail(subjectTx,textTx) {

@@ -13,29 +13,32 @@
     <form method="post" action="/eq/para/post">
       <div class="form-group">
         <label for="kokiNum">kokiNum:</label>
-        <input type="text" name="kokiNum" id="kokiNum" value=<%= kokiNum %>
+        <input type="text" name="kokiNum" id="kokiNum" value=<%= eq_dt.kokiNum %>
           class="form-control">
       </div>
       
        <div class="form-group">
         <label for="url">url:</label>
-        <input type="text" name="url" id="url" value=<%= url %>
+        <input type="text" name="url" id="url" value=<%= eq_dt.url %>
           class="form-control">
       </div>
       
        <div class="form-group">
         <label for="press">press:</label>
-        <input type="text" name="press" id="press" value=<%= press %>
+        <input type="text" name="press" id="press" value=<%= eq_dt.press %>
           class="form-control">
       </div>
       
        <div class="form-group">
         <label for="email">email:</label>
-        <input type="text" name="email" id="email" value=<%= email %>
+        <input type="text" name="email" id="email" value=<%= eq_dt.email %>
           class="form-control">
       </div>
       
-      
+      <div class="form-group">
+        <label for='emailSW:'>emailSw</label>
+         <input type="checkbox" name="emailSw" value="on" <%= emailSw %> />
+      </div>
       
       <input type="submit" value="TX" 
         class="btn btn-primary">
