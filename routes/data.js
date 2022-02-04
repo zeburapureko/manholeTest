@@ -6,11 +6,9 @@ var fs=require('fs');
 var express = require('express');
 require('date-utils');
 const NodeMailer = require('nodemailer');
-
-
 var router = express.Router();
 
-
+console.log('manholeTest start')
 
 var dt = new Date();
 const max_num=100;
@@ -476,8 +474,8 @@ function sendMail(subjectTx,textTx) {
         port: '465',
         secure: true, // SSL
         auth: {
-            user: 'pureko7@gmail.com',
-            pass: 'imiaevrvpodmbhuj'
+            user: 'fandosystemsserver@gmail.com',
+            pass: 'vfdsdjavssaryyox'
         }
     };
  
@@ -488,10 +486,10 @@ function sendMail(subjectTx,textTx) {
     subject: subjectTx,                              // 件名
     text: 'http://54.150.157.88:8080',               // 通常のメール本文
     html: "<a href='http://54.150.157.88:8080'>manholeIoTへ</a>",               // HTMLメール
-  }
+  };
 
   // メールを送信
-  sendMailsub(smtpData, mailData)
+  sendMailsub(smtpData, mailData);
 }
 
   

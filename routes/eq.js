@@ -38,6 +38,7 @@ router.post('/para/post',(req, res, next)=> {
     global.eq_dt.url=req.body['url'];
     global.eq_dt.kokiNum=req.body['kokiNum'];
     global.eq_dt.press=req.body['press'];
+    global.eq_dt.email=req.body['email'];
     
     var c=req.body['emailSw'];
     
