@@ -345,9 +345,9 @@ router.post('/post',(req, res, next)=> {
     res.render('data/response',postData);
     console.log(req.body);
     
-    if(id==global.eq_dt.kokiNum-1)
+    if((id==global.eq_dt.kokiNum-1) && (global.eq_dt.emailSw=='on'))
     {
-        var subject='親機'+postData.oya.substr(0,11)+'異常';
+        var subject='manholeIoT'+postData.oya.substr(0,11)+'異常通知';
         sendMail(subject,'message');
     }
     console.log(global.ee);
