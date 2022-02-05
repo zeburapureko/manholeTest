@@ -7,8 +7,7 @@ global.eq_dt = {
       url:"54.150.157.88",
       kokiNum:"2",
       press:"010",
-      email:'yoshihara@fando.co.jp',
-      emailSw:'on'
+      
     };
    
     const filename = '../eqData.txt'; // データファイル名
@@ -38,15 +37,8 @@ router.post('/post',(req, res, next)=> {
 });
 
 router.get('/para/update', function(req, res, next) {
-  var eSw;
-  if(global.eq_dt.emailSw=='off')
-    eSw='';
-  else
-    eSw='checked';
-    
   var content={
     eq_dt:global.eq_dt,
-    emailSw:eSw,
   };
   res.render('eq/para/update',content);
 });
@@ -55,13 +47,6 @@ router.post('/para/post',(req, res, next)=> {
     global.eq_dt.url=req.body['url'];
     global.eq_dt.kokiNum=req.body['kokiNum'];
     global.eq_dt.press=req.body['press'];
-    global.eq_dt.email=req.body['email'];
-    
-    var c=req.body['emailSw'];
-    if(c==undefined)
-      global.eq_dt.emailSw='off';
-    else
-      global.eq_dt.emailSw='on';
 
     //saveToFile(filename,global.eq_dt);    
     res.render('eq/response',global.eq_dt);

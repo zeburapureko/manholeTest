@@ -346,7 +346,7 @@ router.post('/post',(req, res, next)=> {
     res.render('data/response',postData);
     console.log(req.body);
     
-    if((id==global.eq_dt.kokiNum-1) && (global.eq_dt.emailSw=='on'))
+    if((id==global.eq_dt.kokiNum-1) && (global.email_dt.sw=='on'))
     {
         var subject='manholeIoT'+postData.oya.substr(0,11)+'異常通知';
         sendMail(subject,'message');
@@ -483,7 +483,7 @@ function sendMail(subjectTx,textTx) {
   // 送信内容を作成
   const mailData = {
     from: '"manholeIoT<' + smtpData.auth.user + '>', // 送信元名
-    to: global.eq_dt.email,                     // 送信先
+    to: global.email_dt.address,                       // 送信先
     subject: subjectTx,                              // 件名
     text: 'http://54.150.157.88:8080',               // 通常のメール本文
     html: "<a href='http://54.150.157.88:8080'>manholeIoTへ</a>",               // HTMLメール
