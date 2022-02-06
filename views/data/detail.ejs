@@ -3,7 +3,10 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    
+    <!-- Bootstrap CSS -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
+
+   </head>
  <style>
       h1{color:teal}
       th{
@@ -30,11 +33,26 @@
        color='Red'
     document.getElementById(item).style.backgroundColor = color;
     }
+     function add(v)
+    {
+      let result;
+      result=v+1;
+      return result;
+    }
 </script>
+
   </head>
+    <body>
   
-  <body>
     <h1><%= title %></h1>
+    <p><a href='/'>menu</a>
+    
+    <script>
+    var s=0;
+    </script>
+    <!--<a href='/data/detail?no='>AAA </a>-->
+    <!--<a href='/data/detail?no='+v>>></a>-->
+    <br></p>
     <p>データNo <%= no %></p>
     <p>日付 <%= data_con['dateStr'] %></p>
 
@@ -117,6 +135,8 @@
     <% } %>
     </tbody>
   </table>
+       
+ 
  
 
   </body>

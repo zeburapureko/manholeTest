@@ -3,7 +3,7 @@ var router = express.Router();
 
 global.email_dt={
     address:'yoshihara@fando.co.jp',
-    sw:'on',
+    sw:'off',
     resetFlg:'off'
 };
 

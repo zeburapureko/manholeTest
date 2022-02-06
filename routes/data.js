@@ -479,8 +479,7 @@ function sendMail(subjectTx,textTx) {
             pass: 'vfdsdjavssaryyox'
         }
     };
- 
-  // 送信内容を作成
+   // 送信内容を作成
   const mailData = {
     from: '"manholeIoT<' + smtpData.auth.user + '>', // 送信元名
     to: global.email_dt.address,                       // 送信先
