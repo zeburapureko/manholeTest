@@ -8,7 +8,7 @@ require('date-utils');
 const NodeMailer = require('nodemailer');
 var router = express.Router();
 
-console.log('manholeTest start')
+console.log('manholeTest start');
 
 var dt = new Date();
 const max_num=100;
@@ -20,11 +20,11 @@ message_data =[];// "".split('\n');
       dateStr:"",
       oya: "0000000000000",
       koki:[KOKI_NUM]
-    };
+    };ko
     var ko={    k0: "000000",
-                k0p1: "0",
-                k0p2: "0",
-            }
+                k0p1: "00",
+                k0p2: "00",
+            };
     for(var i=0;i<KOKI_NUM;i++)
     {
         postData.koki[i]=JSON.parse(JSON.stringify(ko));    
@@ -36,13 +36,13 @@ message_data =[];// "".split('\n');
       koki:[
             {
                 k0: "40123",
-                k0p1: "11125959",
+                k0p1: "011125959",
                 k0p2: "3112595801259571125956",
             },
             {
                 k0: "70222",
-                k0p1: "11125959",
-                k0p2: "0",
+                k0p1: "011125959",
+                k0p2: "00",
             }
         ]
     };
@@ -147,7 +147,7 @@ router.get('/detail',(req,res,next)=>{
    data_con.dateStr=message_data[no].dateStr;
    data_con.cnum=message_data[no].oya.substr(0,11);
    data_con.oyaBat.str=message_data[no].oya.substr(11,1);
-   var wk=parseInt(data_con.oyaBat.str);
+   var wk=parseInt(data_con.oyaBat.str,10);
    if(wk==1)
    {
        data_con.oyaBat.txt='Low';
@@ -182,7 +182,7 @@ router.get('/detail',(req,res,next)=>{
        
             //子機エラーコード
             data_con.koki[i].k0_errCode.str=message_data[no].koki[i].k0.substr(1,1);
-            wk=parseInt(data_con.koki[i].k0_errCode.str);
+            wk=parseInt(data_con.koki[i].k0_errCode.str,10);
             if(wk==0)
             {
                 data_con.koki[i].k0_errCode.bkColor='Blue';
@@ -193,7 +193,7 @@ router.get('/detail',(req,res,next)=>{
             }
             //異常フラグ
             var str=message_data[no].koki[i].k0.substr(0,1);
-            var ijyoFlg=parseInt(str);
+            var ijyoFlg=parseInt(str,10);
             //Bit0.子機電源
             if((ijyoFlg & 1)==1)
             {
@@ -229,11 +229,11 @@ router.get('/detail',(req,res,next)=>{
                 data_con.koki[i].k0_teiden.txt='';
             }
             //ポンプCH0
-            data_con.koki[i].pompCH[0].dtNum=message_data[no].koki[i].k0p1.substr(0,1);
+            data_con.koki[i].pompCH[0].dtNum=message_data[no].koki[i].k0p1.substr(0,2);
             for(var j=0;j<data_con.koki[i].pompCH[0].dtNum;j++)
             {
-                data_con.koki[i].pompCH[0].pompDt[j].st=message_data[no].koki[i].k0p1.substr(1+(j*7),1);
-                data_con.koki[i].pompCH[0].pompDt[j].dt=message_data[no].koki[i].k0p1.substr(2+(j*7),6);
+                data_con.koki[i].pompCH[0].pompDt[j].st=message_data[no].koki[i].k0p1.substr(2+(j*7),1);
+                data_con.koki[i].pompCH[0].pompDt[j].dt=message_data[no].koki[i].k0p1.substr(3+(j*7),6);
                 if(data_con.koki[i].pompCH[0].pompDt[j].st==1)
                 {
                     data_con.koki[i].pompCH[0].pompDt[j].bkColor='Blue';
@@ -246,11 +246,11 @@ router.get('/detail',(req,res,next)=>{
                 }
             }
             //ポンプCH1
-            data_con.koki[i].pompCH[1].dtNum=message_data[no].koki[i].k0p2.substr(0,1);
+            data_con.koki[i].pompCH[1].dtNum=message_data[no].koki[i].k0p2.substr(0,2);
             for( j=0;j<data_con.koki[i].pompCH[1].dtNum;j++)
             {
-                data_con.koki[i].pompCH[1].pompDt[j].st=message_data[no].koki[i].k0p2.substr(1+(j*7),1);
-                data_con.koki[i].pompCH[1].pompDt[j].dt=message_data[no].koki[i].k0p2.substr(2+(j*7),6);
+                data_con.koki[i].pompCH[1].pompDt[j].st=message_data[no].koki[i].k0p2.substr(2+(j*7),1);
+                data_con.koki[i].pompCH[1].pompDt[j].dt=message_data[no].koki[i].k0p2.substr(3+(j*7),6);
                 if(data_con.koki[i].pompCH[1].pompDt[j].st==1)
                 {
                     data_con.koki[i].pompCH[1].pompDt[j].bkColor='Blue';
@@ -269,7 +269,7 @@ router.get('/detail',(req,res,next)=>{
         }
     }
 
-    var intNo = parseInt(no)+1;
+    var intNo = parseInt(no,10)+1;
     var content= {
        title:'data/detail',
        no:intNo,
@@ -334,8 +334,9 @@ router.post('/post',(req, res, next)=> {
     postData.koki[id].k0p2= req.body['k0p2'];
 
     if(id==0){}
-    if(id==global.eq_dt.kokiNum-1)
+    if(id==global.eq_dt.kokiNum-1)//最後の子機のポストでデータ作成する。
     {
+            
             dt= new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
             postData.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
             jsonAddData(postData);
@@ -356,12 +357,6 @@ router.post('/post',(req, res, next)=> {
 });
 
 router.get('/response',(req, res, next)=> {
-    
-    //if(req.session.data !=undefined)
-    //{
-    // data =req.session.data;
-    //}
-    
     res.render('data/response', postData);
 });
 
@@ -379,8 +374,8 @@ function jsonAddData(psdata)
       koki:[]
     };
     var ko={    k0: "000000",
-                k0p1: "0",
-                k0p2: "0",
+                k0p1: "00",
+                k0p2: "00",
             };
             
     for(var i=0;i<global.eq_dt.kokiNum;i++)
@@ -402,7 +397,6 @@ function jsonAddData(psdata)
         message_data.pop();
 }
 
-
 function jtoS()
 {
     //jsonから文字列データへ変換
@@ -412,7 +406,6 @@ function jtoS()
         message_data.push(JSON.stringify(json_data[i]));
     }
 }
-
 // データを更新
 function addToData(data) {
   var obj = { 'dateStr': data.dateStr, 'oya': data.oya,'k0':data.k0,'k0p1':data.k0p1,'k0p2':data.k0p2
