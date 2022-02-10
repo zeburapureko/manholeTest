@@ -343,8 +343,10 @@ router.post('/post',(req, res, next)=> {
     }
    
     req.session.data=postData;
-    //res.render('data/index', data);
-    res.render('data/response',postData);
+    var content={
+        cnum:postData.oya.substr(0,11)
+    };
+    res.render('data/response',content);
     console.log(req.body);
     
     if((id==global.eq_dt.kokiNum-1) && (global.email_dt.sw=='on'))
