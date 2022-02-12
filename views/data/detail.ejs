@@ -77,6 +77,7 @@
       <tr>
         <th>子機id</th>
         <th>通信エラーコード</th>
+        <th>RSSI</th>
         <th>エラーコード</th>
         <th>停電</th>
         <th>圧力値</th>
@@ -88,6 +89,7 @@
     </thead>
         <td><%= i %></td>
         <td bgcolor=<%=data_con['koki'][i]['commErrCode']['bkColor'] %>><font color="White"><%= data_con['koki'][i]['commErrCode']['str'] %></font></td>
+        <td bgcolor=<%=data_con['koki'][i]['rssi']['bkColor'] %>><font color="black"><%= data_con['koki'][i]['rssi']['str'] %></font></td>
         <td bgcolor=<%=data_con['koki'][i]['k0_errCode']['bkColor'] %>><font color="White"><%= data_con['koki'][i]['k0_errCode']['str'] %></font></td>
         <td bgcolor=<%=data_con['koki'][i]['k0_teiden']['bkColor'] %>><font color="White"><%= data_con['koki'][i]['k0_teiden']['txt'] %></font></td>
         <td bgcolor=<%=data_con['koki'][i]['k0_press']['bkColor'] %>><font color="White"><%= data_con['koki'][i]['k0_press']['txt'] %></font></td>

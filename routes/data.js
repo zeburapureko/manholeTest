@@ -18,7 +18,7 @@ message_data =[];// "".split('\n');
 
  var postData = {
       dateStr:"",
-      oya: "0000000000000",
+      oya: "00000000000000",
       koki:[KOKI_NUM]
     };ko
     var ko={    k0: "000000",
@@ -81,6 +81,7 @@ function data_con_init(dt)
     
        var  koki ={
                     commErrCode:{str:"",txt:"",bkColor:"white"},
+                    rssi:{str:"",txt:"",bkColor:"white"},
                     k0_errCode:{str:"",txt:"",bkColor:"white"},
                     k0_bat:{str:"",txt:"",bkColor:"white"},
                     k0_press:{str:"",txt:"",bkColor:"white"},
@@ -174,12 +175,14 @@ router.get('/detail',(req,res,next)=>{
     for(var i=0;i<global.eq_dt.kokiNum;i++)//子機数
     {
         //子機通信エラーコード
-        data_con.koki[i].commErrCode.str=message_data[no].oya.substr(14+(i*2),2);
+        data_con.koki[i].commErrCode.str=message_data[no].oya.substr(14+(i*4),2);
         var commErrCode=parseInt(data_con.koki[i].commErrCode.str,16);
         if(commErrCode==1)
         {
            data_con.koki[i].commErrCode.bkColor='Blue';
-       
+            //rssi
+            data_con.koki[i].rssi.str=(parseInt(message_data[no].oya.substr(14+(i*4)+2,2),16))*-1;
+            data_con.koki[i].rssi.bkColor='white';
             //子機エラーコード
             data_con.koki[i].k0_errCode.str=message_data[no].koki[i].k0.substr(1,1);
             wk=parseInt(data_con.koki[i].k0_errCode.str,10);
@@ -423,9 +426,7 @@ function addToData(data) {
   var json_dt=JSON.parse(str);
   var item=json_dt['k0'];
 
-  var str1 = message_data[0];
-  var json_dt1=JSON.parse(message_data[0]);
-  var item1=(JSON.parse(message_data[0]))['k0'];
+ 
 }
 // テキストファイルをロード
 function readFromFile(fname) {
