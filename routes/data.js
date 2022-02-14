@@ -1,3 +1,4 @@
+const OYA_NUM=2;
 const KOKI_NUM=10;
 const POMP_DT_NUM=18;
 const POMP_CH_NUM=2;
@@ -29,6 +30,15 @@ message_data =[];// "".split('\n');
     {
         postData.koki[i]=JSON.parse(JSON.stringify(ko));    
     }
+
+var array={
+    postData:[2]
+}
+for(var i=0;i<OYA_NUM;i++)
+{
+    array.postData[i]=JSON.parse(JSON.stringify(postData));
+}
+
     
  var dataDumy = {
       dateStr:"20220126155959",
@@ -330,31 +340,42 @@ router.get('/update',(req, res, next)=> {
 //--------------------
 router.post('/post',(req, res, next)=> {
     var id=req.body['id'];
-    postData.oya=req.body['oya'];
     
-    postData.koki[id].k0=req.body['k0'];
-    postData.koki[id].k0p1= req.body['k0p1'];
-    postData.koki[id].k0p2= req.body['k0p2'];
+    var arrNo;
+    var cnum=req.body['oya'].substr(0,11);
+    if(cnum=='02015909616')
+        arrNo=0;
+    else if(cnum=='02021750731')    
+        arrNo=1;
+    else
+        arrNo=2;
+    
+    array.postData[arrNo].oya=req.body['oya'];
+    array.postData[arrNo].koki[id].k0=req.body['k0'];
+    array.postData[arrNo].koki[id].k0p1= req.body['k0p1'];
+    array.postData[arrNo].koki[id].k0p2= req.body['k0p2'];
 
     if(id==0){}
     if(id==global.eq_dt.kokiNum-1)//最後の子機のポストでデータ作成する。
     {
             
             dt= new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
-            postData.dateStr = dt.toFormat('YYYYMMDDHH24MISS');
-            jsonAddData(postData);
+            array.postData[arrNo].dateStr = dt.toFormat('YYYYMMDDHH24MISS');
+            jsonAddData(array.postData[arrNo]);
     }
    
-    req.session.data=postData;
+   
+   // req.session.data=array.postData[0];
+    //var cnum=array.postData[0].oya.substr(0,11);
     var content={
-        cnum:postData.oya.substr(0,11)
+        cnum:cnum
     };
     res.render('data/response',content);
     console.log(req.body);
     
     if((id==global.eq_dt.kokiNum-1) && (global.email_dt.sw=='on'))
     {
-        var subject='manholeIoT'+postData.oya.substr(0,11)+'異常通知';
+        var subject='manholeIoT'+cnum+'異常通知';
         sendMail(subject,'message');
     }
     console.log(global.ee);
